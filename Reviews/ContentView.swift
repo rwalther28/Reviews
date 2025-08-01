@@ -8,14 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+    @State private var searchText = ""
+    let items = ["English", "Science", "Math", "Social Studies"]
+    var filteredItems: [String] {
+        if searchText.isEmpty {
+            return []
+        } else {
+            return items.filter {$0.localizedCaseInsensitiveContains(searchText)}
         }
-        .padding()
+    }
+    var body: some View {
+        NavigationStack {
+            List(filteredItems, id: \.self) { item in
+            Text(item)
+            }
+            .listStyle(.plain)
+            .navigationTitle("Buff 'n' Blue Reviews")
+            .searchable(text: $searchText, prompt: "Search for a class")
+            VStack {
+                
+            }
+            .navigationTitle("Buff 'n' Blue Reviews")
+        }
     }
 }
 
